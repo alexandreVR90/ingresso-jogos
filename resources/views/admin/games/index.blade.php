@@ -29,18 +29,29 @@
                 @foreach($games as $game)
                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-900">
                     <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">{{ $game->title }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">{{ $game->date->format('d/m/Y') }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">
+                        {{ \Carbon\Carbon::parse($game->date)->format('d/m/Y') }}
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">{{ $game->location }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-center space-x-2">
-                        <a href="{{ route('admin.games.show', $game) }}" 
-                           class="text-indigo-600 hover:text-indigo-900 font-semibold">Ver</a>
-                        <a href="{{ route('admin.games.edit', $game) }}" 
-                           class="text-yellow-600 hover:text-yellow-900 font-semibold">Editar</a>
-                        <form action="{{ route('admin.games.destroy', $game) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja excluir este jogo?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-900 font-semibold">Excluir</button>
-                        </form>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                        <div class="flex justify-center gap-2 flex-wrap">
+                            <a href="{{ route('admin.games.show', $game) }}" 
+                               class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-xs">
+                                Ver
+                            </a>
+                            <a href="{{ route('admin.games.edit', $game) }}" 
+                               class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 text-xs">
+                                Editar
+                            </a>
+                            <form action="{{ route('admin.games.destroy', $game) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este jogo?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" 
+                                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 text-xs">
+                                     Excluir
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach

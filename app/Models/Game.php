@@ -16,6 +16,11 @@ class Game extends Model
         'location',
     ];
 
+    // Aqui adiciona o cast para que o campo date seja um objeto Carbon automaticamente
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
     public function lots()
     {
         return $this->hasMany(Lot::class);
